@@ -317,8 +317,9 @@
             <h3 class="text-3xl font-bold tracking-tight sm:text-4xl">Quiero que me contacten</h3>
             <form class="mt-6 space-y-4" action="#" method="POST">
               <div>
-                <label class="mb-1 block text-sm font-medium" for="fecha">Fecha</label>
-                <input id="fecha" name="fecha" type="text" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
+                <label class="mb-1 block text-sm font-medium">Fecha</label>
+                <div id="fecha"></div>
+                <input id="fechaInput" name="fecha" type="hidden" />
               </div>
               <div>
                 <label class="mb-1 block text-sm font-medium" for="hora">Hora</label>
@@ -372,7 +373,13 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    flatpickr("#fecha", { inline: true, dateFormat: "Y-m-d" });
+    flatpickr("#fecha", {
+      inline: true,
+      dateFormat: "Y-m-d",
+      onChange: function(selectedDates, dateStr) {
+        document.getElementById('fechaInput').value = dateStr;
+      }
+    });
   </script>
   <script>
     // Año dinámico
