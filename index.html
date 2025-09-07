@@ -1,236 +1,480 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sitios y aplicaciones web a la medida</title>
-  <meta name="description" content="Desarrollo de sitios y aplicaciones web a la medida: diseño, desarrollo y despliegue con opciones de pago flexibles." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Estudio Ágil — Desarrollo Web moderno que convierte</title>
+  <meta name="description" content="Diseñamos y desarrollamos sitios web rápidos, accesibles y enfocados en conversiones. E‑commerce, landing pages y plataformas a medida." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:title" content="Estudio Ágil — Desarrollo Web" />
+  <meta property="og:description" content="Sitios rápidos, accesibles y medibles. Impulsa tu marca con un sitio que convierte." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tu-dominio.cl/" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80&auto=format&fit=crop" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              50: '#eefaff', 100:'#d6f3ff', 200:'#b6e9ff', 300:'#86ddff', 400:'#4ecaff',
+              500:'#23b0ff', 600:'#1491e0', 700:'#0f72b3', 800:'#115f90', 900:'#134f77'
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(16,24,40,.08)'
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    :root{
-      --bg: #0a0a0a;
-      --card: #121212;
-      --muted: #bdbdbd;
-      --text: #ffffff;
-      --primary: #8B5CF6; /* violeta */
-      --primary-700: #6D28D9;
-      --ring: rgba(139, 92, 246, 0.35);
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg); color: var(--text);
-      line-height:1.6;
-    }
-    img{max-width:100%; display:block}
-    a{color:inherit; text-decoration:none}
-
-    .container{width:100%; max-width:1200px; margin-inline:auto; padding-inline:24px}
-    .section{padding: clamp(56px, 8vw, 96px) 0}
-
-    /* Botones */
-    .btn{
-      display:inline-block; padding:14px 22px; border-radius: 14px; font-weight:600;
-      background: var(--primary); color:#fff; border:1px solid transparent;
-      box-shadow: var(--shadow);
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .btn:hover{transform: translateY(-1px); box-shadow: 0 16px 40px rgba(0,0,0,.45); background: var(--primary-700)}
-    .btn:focus{outline: none; box-shadow: 0 0 0 6px var(--ring)}
-
-    /* HERO */
-    .hero{
-      position:relative; min-height: 88vh; display:grid; place-items:center; text-align:center;
-      background: url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
-    }
-    .hero::before{content:""; position:absolute; inset:0; background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.35));}
-    .hero-inner{position:relative; z-index:1; padding: 0 24px}
-    .hero h1{font-size: clamp(28px, 5.5vw, 64px); line-height:1.1; font-weight:800; letter-spacing:-.02em}
-    .hero p{max-width:850px; margin:16px auto 28px; color: var(--muted); font-size: clamp(14px, 2.2vw, 18px)}
-
-    /* Split sections (imagen con degradado a la derecha) */
-    .split{
-      position:relative; min-height:70vh; display:flex; align-items:center; background:#111;
-      background-position:center; background-size:cover;
-    }
-    .split::before{ /* degradado oscuro hacia la derecha */
-      content:""; position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.45) 40%, rgba(0,0,0,.85) 78%);
-    }
-    .split .content{position:relative; z-index:1; margin-left:auto; width: min(680px, 92%); padding: clamp(28px, 5vw, 48px)}
-    .split h2{font-size: clamp(24px, 4.2vw, 44px); line-height:1.15; margin:0 0 12px; font-weight:800}
-    .split p{color:#e6e6e6; font-size: clamp(14px, 2.2vw, 18px); margin:0}
-    .split .actions{margin-top:18px}
-
-    /* Sección precios */
-    .prices h2{font-size: clamp(24px, 4vw, 40px); margin:0}
-    .subtitle{color: var(--muted); margin-top:10px; font-size: clamp(14px, 2.2vw, 18px)}
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding:24px;
-      box-shadow: var(--shadow);
-    }
-    .grid{display:grid; gap:22px}
-    @media (min-width: 860px){ .grid-cols-2{grid-template-columns: 1fr 1fr} }
-
-    .list{margin:0; padding-left:0; list-style:none}
-    .list li{display:flex; gap:10px; align-items:flex-start; padding:8px 0}
-    .badge{display:inline-block; padding:4px 10px; border-radius:999px; background:#1d1d1d; color:#f2f2f2; font-size:12px; border:1px solid rgba(255,255,255,.08)}
-
-    /* Contacto */
-    .contact h2{font-size: clamp(24px, 4vw, 40px); margin:0}
-    .contact .cards{display:grid; gap:18px}
-    @media (min-width: 900px){ .contact .cards{grid-template-columns: repeat(3, 1fr)} }
-
-    .contact .small{color: var(--muted); font-size:13px}
-    .contact a.underline{ text-decoration: underline; text-underline-offset: 3px }
-
-    footer{border-top:1px solid rgba(255,255,255,.08); color:#a3a3a3}
-
-    /* Aparición suave */
-    .reveal{opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease}
-    .reveal.in{opacity:1; transform: translateY(0)}
-
-    @media (prefers-reduced-motion: reduce){
-      html{scroll-behavior:auto}
-      .reveal{opacity:1; transform:none}
-      .btn{transition:none}
-    }
+    /* Pequeñas animaciones utilitarias */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .glass { backdrop-filter: saturate(150%) blur(8px); background: rgba(255,255,255,.6); }
   </style>
 </head>
-<body>
-  <!-- HERO -->
-  <header class="hero" role="banner" aria-label="Portada">
-    <div class="hero-inner">
-      <h1>Satios y aplicaciones web a la medida</h1>
-      <p>Diseñamos, desarrollamos y desplegamos soluciones digitales hechas a tu medida para acelerar tu negocio.</p>
-      <a href="#contacto" class="btn" aria-label="Ir a contacto">Hablemos de tu proyecto</a>
+<body class="bg-white text-slate-800 antialiased">
+  <!-- Ornamentos de fondo -->
+  <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-brand-100 blur-3xl"></div>
+    <div class="absolute top-56 -right-24 h-80 w-80 rounded-full bg-brand-200 blur-3xl"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 glass">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <a href="#inicio" class="group flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-500 text-white font-bold">Á</div>
+        <span class="text-lg font-semibold tracking-tight">Estudio Ágil</span>
+      </a>
+      <nav class="hidden items-center gap-8 md:flex">
+        <a href="#servicios" class="hover:text-brand-700 transition">Servicios</a>
+        <a href="#proyectos" class="hover:text-brand-700 transition">Proyectos</a>
+        <a href="#proceso" class="hover:text-brand-700 transition">Proceso</a>
+        <a href="#precios" class="hover:text-brand-700 transition">Precios</a>
+        <a href="#contacto" class="rounded-full bg-slate-900 px-4 py-2 text-white hover:bg-slate-700 transition">Hablemos</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-md border border-slate-200 p-2 hover:bg-slate-50" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200/70 bg-white/95">
+      <div class="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
+        <a href="#servicios" class="py-2">Servicios</a>
+        <a href="#proyectos" class="py-2">Proyectos</a>
+        <a href="#proceso" class="py-2">Proceso</a>
+        <a href="#precios" class="py-2">Precios</a>
+        <a href="#contacto" class="mt-2 rounded-lg bg-slate-900 px-4 py-2 text-center text-white">Hablemos</a>
+      </div>
     </div>
   </header>
 
-  <!-- ¿Tienes una gran idea? -->
-  <section class="split section reveal" style="background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2400&auto=format&fit=crop')">
-    <div class="content container">
-      <h2>¿Tienes una gran idea?</h2>
-      <p>
-        Sea cual sea tu visión, podemos construirla. Hemos participado en proyectos exigentes para múltiples sectores, resolviendo retos complejos y llevando conceptos a productos reales. Tu idea, bien ejecutada, puede ser la próxima.
-      </p>
-    </div>
-  </section>
-
-  <!-- ¿Falta capital? + CTA Crear propuesta -->
-  <section class="split section reveal" style="background-image:url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=2400&auto=format&fit=crop')">
-    <div class="content container">
-      <h2>¿Tu idea es increíble pero te falta capital?</h2>
-      <p>
-        Estamos abiertos a co‑desarrollar y desplegar tu proyecto ajustando el costo a lo que tu bolsillo o PyME pueda manejar. Podemos financiar una parte del desarrollo a cambio de un porcentaje de las ganancias futuras o dividir el pago en cuotas cómodas y previsibles.
-      </p>
-      <div class="actions">
-        <a href="#contacto" class="btn" id="crear-propuesta">Crear propuesta</a>
+  <!-- Hero -->
+  <section id="inicio" class="relative overflow-hidden">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+      <div class="reveal">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Construimos sitios web <span class="bg-gradient-to-r from-brand-500 to-indigo-500 bg-clip-text text-transparent">rápidos</span>, accesibles y listos para convertir.</h1>
+        <p class="mt-5 text-lg text-slate-600">Del concepto al despliegue: e‑commerce, landings y plataformas a medida con SEO técnico, analítica y performance impecable.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#contacto" class="rounded-full bg-brand-600 px-5 py-3 text-white shadow-soft hover:bg-brand-700">Agenda una llamada</a>
+          <a href="#proyectos" class="rounded-full border border-slate-300 px-5 py-3 hover:bg-slate-50">Ver trabajos</a>
+        </div>
+        <div class="mt-8 flex items-center gap-6 text-sm text-slate-500">
+          <div class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>Entrega en 2–4 semanas</div>
+          <div>Sin plantillas rígidas • 100% a medida</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="relative">
+          <div class="absolute -inset-6 -z-10 rounded-2xl bg-gradient-to-tr from-brand-100 to-indigo-100 blur-2xl"></div>
+          <div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
+            <img alt="Mockup de dashboard moderno" loading="lazy" class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1320&auto=format&fit=crop"/>
+            <div class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 bg-gradient-to-t from-white/90 px-6 py-4">
+              <div class="flex h-8 w-8 items-center justify-center rounded-md bg-brand-600 text-white text-sm font-bold">UX</div>
+              <p class="text-sm text-slate-700">Prototipamos, probamos y medimos. Menos suposiciones, más datos.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- COSTO Y MEDIOS DE PAGO -->
-  <section class="section prices reveal" id="precios">
-    <div class="container">
-      <h2>Costo y Medios de Pago</h2>
-      <p class="subtitle">El valor depende de la complejidad del proyecto. Podrás pedir la cotización de tu idea <strong>SIN COSTO</strong>.</p>
+  <!-- Confianza -->
+  <section aria-label="Confianza" class="border-y border-slate-200/70 bg-slate-50/60">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <p class="mb-4 text-center text-sm uppercase tracking-widest text-slate-500">Tecnologías con las que trabajamos</p>
+      <div class="grid grid-cols-2 items-center gap-6 opacity-80 sm:grid-cols-3 md:grid-cols-6">
+        <div class="flex items-center justify-center rounded-lg border bg-white px-4 py-3"><span class="font-semibold">Next.js</span></div>
+        <div class="flex items-center justify-center rounded-lg border bg-white px-4 py-3"><span class="font-semibold">React</span></div>
+        <div class="flex items-center justify-center rounded-lg border bg-white px-4 py-3"><span class="font-semibold">Tailwind</span></div>
+        <div class="flex items-center justify-center rounded-lg border bg-white px-4 py-3"><span class="font-semibold">Node</span></div>
+        <div class="flex items-center justify-center rounded-lg border bg-white px-4 py-3"><span class="font-semibold">Shopify</span></div>
+        <div class="flex items-center justify-center rounded-lg border bg-white px-4 py-3"><span class="font-semibold">WordPress</span></div>
+      </div>
+    </div>
+  </section>
 
-      <div class="grid grid-cols-2" style="margin-top:28px">
-        <div class="card">
-          <span class="badge">Formas de pago</span>
-          <ul class="list" style="margin-top:12px">
-            <li>Hasta <strong>24 cuotas</strong> para proyectos grandes.</li>
-            <li>Hasta <strong>12 cuotas</strong> para proyectos pequeños.</li>
-            <li>Al contado aceptamos <strong>transferencias</strong>, <strong>tarjetas de débito</strong> y <strong>tarjetas de crédito</strong>.</li>
+  <!-- Servicios -->
+  <section id="servicios" class="scroll-mt-24">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Servicios diseñados para crecer</h2>
+        <p class="mt-3 text-slate-600">Un stack moderno para lanzar rápido, posicionar mejor y vender más.</p>
+      </div>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <!-- Card -->
+        <article class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-700">⚡</div>
+          <h3 class="text-lg font-semibold">Landings & Sitios a medida</h3>
+          <p class="mt-2 text-sm text-slate-600">Diseño UX/UI + desarrollo web adaptable y accesible. Páginas que cargan en <em>&lt;1s</em> en 4G.</p>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• Diseño responsive</li>
+            <li>• Copywriting orientado a conversión</li>
+            <li>• Métricas (GA4/Tag Manager)</li>
           </ul>
-          <p class="small" style="color:#9b9b9b; margin-top:10px">* Sujeto a evaluación del proyecto y del plan elegido.</p>
-        </div>
-        <div class="card" aria-label="Solicitud de cotización">
-          <h3 style="margin:0 0 8px; font-size:20px; font-weight:700">Solicita tu cotización</h3>
-          <p class="small" style="margin:0 0 12px">Cuéntanos brevemente tu idea y te responderemos con un estimado inicial.</p>
-          <form id="cotizar-form" style="display:grid; gap:10px">
-            <input type="text" name="nombre" placeholder="Tu nombre" required aria-label="Nombre" style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:#fff" />
-            <input type="email" name="email" placeholder="Tu correo" required aria-label="Correo" style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:#fff" />
-            <textarea name="detalle" rows="4" placeholder="Describe tu proyecto" required aria-label="Detalle del proyecto" style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:#fff"></textarea>
-            <button class="btn" type="submit">Enviar</button>
-            <p id="form-status" class="small" role="status" aria-live="polite" style="display:none; color:#bdbdbd"></p>
-          </form>
-        </div>
+        </article>
+        <article class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-700">🛒</div>
+          <h3 class="text-lg font-semibold">E‑commerce</h3>
+          <p class="mt-2 text-sm text-slate-600">Tiendas en Shopify/Woo con pasarelas locales, catálogos optimizados y checkout simple.</p>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• Integración logística</li>
+            <li>• Medios de pago</li>
+            <li>• Upsells y email marketing</li>
+          </ul>
+        </article>
+        <article class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-700">🚀</div>
+          <h3 class="text-lg font-semibold">Performance & SEO</h3>
+          <p class="mt-2 text-sm text-slate-600">Auditorías Core Web Vitals, arquitectura SEO y contenidos que posicionan.</p>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• Schema y datos estructurados</li>
+            <li>• Optimización de velocidad</li>
+            <li>• Investigación de palabras clave</li>
+          </ul>
+        </article>
+        <article class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-100 text-brand-700">🔁</div>
+          <h3 class="text-lg font-semibold">Soporte & Growth</h3>
+          <p class="mt-2 text-sm text-slate-600">Mantenimiento, mejoras continuas y experimentos A/B para escalar.</p>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• Roadmap trimestral</li>
+            <li>• Sprints quincenales</li>
+            <li>• Monitoreo uptime</li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- CONTACTO -->
-  <section class="section contact reveal" id="contacto" aria-label="Contacto">
-    <div class="container">
-      <h2>¿Qué esperas para dar marcha a tu idea?</h2>
-      <p class="subtitle">Estamos aquí para ayudarte si tienes una gran idea.</p>
-
-      <div class="cards" style="margin-top:22px">
-        <div class="card">
-          <h3 style="margin:0 0 8px">WhatsApp</h3>
-          <p class="small">Escríbenos y conversemos tu proyecto.</p>
-          <a class="btn" href="https://wa.me/56912345678" target="_blank" rel="noopener">Enviar mensaje</a>
-          <p class="small" style="margin-top:10px">Tiempo de respuesta aprox. 1–3 horas hábiles.</p>
-        </div>
-        <div class="card">
-          <h3 style="margin:0 0 8px">Correo</h3>
-          <p class="small">Prefieres email:</p>
-          <p><a class="underline" href="mailto:contacto@tuagencia.cl">contacto@tuagencia.cl</a></p>
-          <a class="btn" href="mailto:contacto@tuagencia.cl?subject=Cotización%20de%20proyecto">Solicitar cotización</a>
-        </div>
-        <div class="card">
-          <h3 style="margin:0 0 8px">Teléfono</h3>
-          <p class="small">¿Quieres hablar ahora?</p>
-          <p style="font-weight:700; font-size:18px">+56 9 1234 5678</p>
-          <p class="small">Lun–Vie, 9:00 a 18:00 (CLT)</p>
-        </div>
+  <!-- Proyectos -->
+  <section id="proyectos" class="scroll-mt-24 border-t border-slate-200/70 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Trabajo reciente</h2>
+        <p class="mt-3 text-slate-600">Algunos highlights de proyectos reales — rendimiento, claridad y marca.</p>
       </div>
-
-      <p class="small" style="margin-top:14px">* Reemplaza los datos de contacto por los tuyos antes de publicar.</p>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Project card -->
+        <a class="reveal group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft" href="#" aria-label="Proyecto 1">
+          <img class="h-48 w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" alt="Proyecto SaaS"/>
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold">SaaS B2B</h3>
+              <span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-700">+78% leads</span>
+            </div>
+            <p class="mt-2 text-sm text-slate-600">Landing orientada a demo + automatización de correos.</p>
+          </div>
+        </a>
+        <a class="reveal group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft" href="#" aria-label="Proyecto 2">
+          <img class="h-48 w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=1200&auto=format&fit=crop" alt="Ecommerce minimal"/>
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold">E‑commerce</h3>
+              <span class="rounded-full bg-indigo-50 px-2 py-1 text-xs text-indigo-700">1.3s LCP</span>
+            </div>
+            <p class="mt-2 text-sm text-slate-600">Catálogo con filtros dinámicos y checkout simplificado.</p>
+          </div>
+        </a>
+        <a class="reveal group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft" href="#" aria-label="Proyecto 3">
+          <img class="h-48 w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Aplicación a medida"/>
+          <div class="p-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold">Plataforma a medida</h3>
+              <span class="rounded-full bg-amber-50 px-2 py-1 text-xs text-amber-700">+45% retención</span>
+            </div>
+            <p class="mt-2 text-sm text-slate-600">SPA con autenticación, dashboard y analítica.</p>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
-  <footer class="section" style="padding:28px 0">
-    <div class="container" style="display:flex; gap:18px; flex-wrap:wrap; align-items:center; justify-content:space-between">
-      <p class="small">© <span id="year"></span> Tu Agencia. Todos los derechos reservados.</p>
-      <nav style="display:flex; gap:18px">
-        <a class="small underline" href="#precios">Precios</a>
-        <a class="small underline" href="#contacto">Contacto</a>
-      </nav>
+  <!-- Proceso -->
+  <section id="proceso" class="scroll-mt-24">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Un proceso claro, sin humo</h2>
+        <p class="mt-3 text-slate-600">Transparente de principio a fin, para que sepas siempre qué sigue.</p>
+      </div>
+      <ol class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <li class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-2 text-sm font-medium text-brand-700">1. Descubrimiento</div>
+          <p class="text-sm text-slate-600">Brief, objetivos y métricas de éxito.</p>
+        </li>
+        <li class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-2 text-sm font-medium text-brand-700">2. UX/UI</div>
+          <p class="text-sm text-slate-600">Wireframes, diseño visual y prototipos.</p>
+        </li>
+        <li class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-2 text-sm font-medium text-brand-700">3. Desarrollo</div>
+          <p class="text-sm text-slate-600">Código limpio, accesible y escalable.</p>
+        </li>
+        <li class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-2 text-sm font-medium text-brand-700">4. QA & Performance</div>
+          <p class="text-sm text-slate-600">Pruebas, SEO técnico y Core Web Vitals.</p>
+        </li>
+        <li class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <div class="mb-2 text-sm font-medium text-brand-700">5. Lanzamiento & Growth</div>
+          <p class="text-sm text-slate-600">Monitoreo, mejoras y experimentación.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section class="border-y border-slate-200/70 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center reveal">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Lo que dicen nuestros clientes</h2>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <figure class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <blockquote class="text-slate-700">“Pasamos de un sitio lento a una máquina de leads. El equipo entendió el negocio y eso se nota.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500">— Camila R., SaaS B2B</figcaption>
+        </figure>
+        <figure class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <blockquote class="text-slate-700">“Implementaron la tienda en dos semanas, con integraciones perfectas. Ventas arriba desde el día uno.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500">— Rodrigo M., Retail</figcaption>
+        </figure>
+        <figure class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <blockquote class="text-slate-700">“Excelente comunicación y resultados medibles. Recomendadísimos.”</blockquote>
+          <figcaption class="mt-4 text-sm text-slate-500">— Natalia V., Educación</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios -->
+  <section id="precios" class="scroll-mt-24">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center reveal">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Planes simples, sin letra chica</h2>
+        <p class="mt-3 text-slate-600">Escoge un punto de partida. Ajustamos cada proyecto a tu realidad.</p>
+      </div>
+      <div class="mt-10 grid gap-6 lg:grid-cols-3">
+        <!-- Starter -->
+        <div class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <h3 class="text-xl font-semibold">Starter</h3>
+          <p class="mt-1 text-sm text-slate-600">Ideal para validar una idea o campaña.</p>
+          <div class="mt-4 text-3xl font-bold">$390.000 <span class="text-base font-normal text-slate-500">+ IVA</span></div>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• 1 landing page</li>
+            <li>• Diseño responsive</li>
+            <li>• Integración analítica</li>
+            <li>• 1 ronda de iteraciones</li>
+          </ul>
+          <a href="#contacto" class="mt-6 inline-block rounded-lg border border-slate-300 px-4 py-2 hover:bg-slate-50">Empezar</a>
+        </div>
+        <!-- Pro -->
+        <div class="reveal rounded-2xl border-2 border-brand-500 bg-white p-6 shadow-soft">
+          <div class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-2 py-1 text-xs font-medium text-brand-700">Más elegido</div>
+          <h3 class="mt-2 text-xl font-semibold">Pro</h3>
+          <p class="mt-1 text-sm text-slate-600">Sitio de alto rendimiento listo para escalar.</p>
+          <div class="mt-4 text-3xl font-bold">$790.000 <span class="text-base font-normal text-slate-500">+ IVA</span></div>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• Hasta 5 secciones</li>
+            <li>• SEO técnico + CWV</li>
+            <li>• CMS (Headless/WordPress)</li>
+            <li>• 2 rondas de iteraciones</li>
+          </ul>
+          <a href="#contacto" class="mt-6 inline-block rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700">Reservar</a>
+        </div>
+        <!-- Plus -->
+        <div class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <h3 class="text-xl font-semibold">Plus</h3>
+          <p class="mt-1 text-sm text-slate-600">E‑commerce o plataforma a medida.</p>
+          <div class="mt-4 text-3xl font-bold">Desde $1.590.000 <span class="text-base font-normal text-slate-500">+ IVA</span></div>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li>• Integraciones API</li>
+            <li>• Auditoría de performance</li>
+            <li>• Capacitación del equipo</li>
+            <li>• Soporte prioritario</li>
+          </ul>
+          <a href="#contacto" class="mt-6 inline-block rounded-lg border border-slate-300 px-4 py-2 hover:bg-slate-50">Cotizar</a>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="mt-16 grid gap-6 md:grid-cols-2">
+        <details class="reveal group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <summary class="flex cursor-pointer list-none items-center justify-between text-base font-semibold">¿Trabajan con plazos ajustados?
+            <span class="ml-4 rounded-full bg-slate-100 px-2 py-1 text-xs group-open:hidden">Abrir</span>
+            <span class="ml-4 hidden rounded-full bg-slate-100 px-2 py-1 text-xs group-open:inline">Cerrar</span>
+          </summary>
+          <p class="mt-3 text-sm text-slate-600">Sí. Definimos un alcance claro y priorizamos lo esencial para salir a producción sin sacrificar rendimiento ni calidad.</p>
+        </details>
+        <details class="reveal group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <summary class="flex cursor-pointer list-none items-center justify-between text-base font-semibold">¿Pueden migrar mi sitio actual?
+            <span class="ml-4 rounded-full bg-slate-100 px-2 py-1 text-xs group-open:hidden">Abrir</span>
+            <span class="ml-4 hidden rounded-full bg-slate-100 px-2 py-1 text-xs group-open:inline">Cerrar</span>
+          </summary>
+          <p class="mt-3 text-sm text-slate-600">Claro. Auditamos el estado actual, preservamos SEO y migramos a una arquitectura moderna (Next.js/WordPress/Shopify, etc.).</p>
+        </details>
+        <details class="reveal group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <summary class="flex cursor-pointer list-none items-center justify-between text-base font-semibold">¿Incluye contenidos y fotos?
+            <span class="ml-4 rounded-full bg-slate-100 px-2 py-1 text-xs group-open:hidden">Abrir</span>
+            <span class="ml-4 hidden rounded-full bg-slate-100 px-2 py-1 text-xs group-open:inline">Cerrar</span>
+          </summary>
+          <p class="mt-3 text-sm text-slate-600">Sí, ofrecemos paquetes de copywriting y selección de imágenes libres de derechos cuando sea necesario.</p>
+        </details>
+        <details class="reveal group rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+          <summary class="flex cursor-pointer list-none items-center justify-between text-base font-semibold">¿Dan factura?
+            <span class="ml-4 rounded-full bg-slate-100 px-2 py-1 text-xs group-open:hidden">Abrir</span>
+            <span class="ml-4 hidden rounded-full bg-slate-100 px-2 py-1 text-xs group-open:inline">Cerrar</span>
+          </summary>
+          <p class="mt-3 text-sm text-slate-600">Sí, emitimos factura electrónica y firmamos acuerdo de confidencialidad si lo requieres.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="scroll-mt-24 border-t border-slate-200/70 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="grid items-start gap-10 lg:grid-cols-2">
+        <div class="reveal">
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Cuéntanos de tu proyecto</h2>
+          <p class="mt-3 text-slate-600">Agenda una reunión de 20 minutos o envíanos un mensaje. Respondemos en 24h hábiles.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="https://calendly.com/" target="_blank" rel="noopener" class="rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700">Agendar en Calendly</a>
+            <a href="mailto:hola@tudominio.cl?subject=Quiero%20hablar%20sobre%20mi%20sitio%20web" class="rounded-lg border border-slate-300 px-4 py-2 hover:bg-slate-50">Escríbenos</a>
+          </div>
+          <ul class="mt-6 space-y-2 text-sm text-slate-600">
+            <li>• Tiempo promedio de carga: <strong>&lt;1.5s</strong></li>
+            <li>• Accesibilidad AA y mejores prácticas</li>
+            <li>• Soporte y mejora continua</li>
+          </ul>
+        </div>
+        <form class="reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-soft" action="https://formspree.io/f/your-id" method="POST">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label class="mb-1 block text-sm font-medium" for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-medium" for="email">Email</label>
+              <input id="email" name="email" type="email" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="mb-1 block text-sm font-medium" for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" rows="5" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none"></textarea>
+            </div>
+            <div class="hidden">
+              <label>Si eres humano, deja esto vacío: <input name="_gotcha" type="text"></label>
+            </div>
+            <label class="sm:col-span-2 mt-2 flex items-start gap-2 text-sm text-slate-600"><input required type="checkbox" class="mt-1"/> Acepto la política de privacidad.</label>
+          </div>
+          <button type="submit" class="mt-6 w-full rounded-lg bg-slate-900 px-4 py-2 text-white hover:bg-slate-700">Enviar</button>
+          <p class="mt-3 text-center text-xs text-slate-500">Usamos tu información solo para contactarte. Nunca spam.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-tr from-brand-50 to-indigo-50"></div>
+    <div class="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
+      <h2 class="reveal text-3xl font-bold tracking-tight sm:text-4xl">¿Listo para lanzar algo increíble?</h2>
+      <p class="reveal mx-auto mt-3 max-w-2xl text-slate-600">Escríbenos y en pocos días tendrás un plan claro, fechas y entregables.</p>
+      <div class="reveal mt-6 flex justify-center"><a href="#contacto" class="rounded-full bg-brand-600 px-6 py-3 text-white shadow-soft hover:bg-brand-700">Iniciar proyecto</a></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200/70">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+        <div class="flex items-center gap-2">
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500 text-white text-sm font-bold">Á</div>
+          <span class="text-sm font-semibold">Estudio Ágil</span>
+        </div>
+        <nav class="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-600">
+          <a href="#servicios" class="hover:text-slate-900">Servicios</a>
+          <a href="#proyectos" class="hover:text-slate-900">Proyectos</a>
+          <a href="#proceso" class="hover:text-slate-900">Proceso</a>
+          <a href="#precios" class="hover:text-slate-900">Precios</a>
+          <a href="#contacto" class="hover:text-slate-900">Contacto</a>
+        </nav>
+        <p class="text-xs text-slate-500">© <span id="year"></span> Estudio Ágil. Todos los derechos reservados.</p>
+      </div>
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    // Año dinámico en el footer
+    // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Aparición suave al hacer scroll
-    const els = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, {threshold: .12});
-    els.forEach(el=>io.observe(el));
+    // Menú móvil
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
 
-    // Formulario de cotización (demo sin backend)
-    const form = document.getElementById('cotizar-form');
-    const status = document.getElementById('form-status');
-    form.addEventListener('submit', (ev)=>{
-      ev.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
-      // Aquí iría tu fetch hacia tu endpoint real
-      console.log('Solicitud de cotización:', data);
-      status.style.display = 'block';
-      status.textContent = '¡Gracias! Recibimos tu solicitud y te contactaremos pronto.';
-      form.reset();
+    // Scroll suave para anclas internas
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        window.scrollTo({ top: el.offsetTop - 72, behavior: 'smooth' });
+      });
     });
+
+    // Revelado al hacer scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+  <!-- JSON‑LD básico -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Estudio Ágil",
+      "url": "https://tu-dominio.cl/",
+      "description": "Desarrollo web moderno: landings, e‑commerce y plataformas a medida.",
+      "areaServed": "CL",
+      "sameAs": ["https://www.linkedin.com/"],
+      "brand": {"@type": "Brand", "name": "Estudio Ágil"}
+    }
   </script>
 </body>
 </html>
