@@ -318,7 +318,14 @@
             <form class="mt-6 space-y-4" action="#" method="POST">
               <div>
                 <label class="mb-1 block text-sm font-medium">Fecha</label>
-                <div id="fecha"></div>
+                <div class="flex items-center gap-4">
+                  <div id="fecha"></div>
+                  <div id="fechaResumen" class="hidden md:flex flex-col items-center justify-center rounded-lg border border-slate-300 px-4 py-2">
+                    <span id="resumenDiaSemana" class="text-sm font-medium"></span>
+                    <span id="resumenDiaNumero" class="text-3xl font-bold leading-none"></span>
+                    <span id="resumenMes" class="text-sm"></span>
+                  </div>
+                </div>
                 <input id="fechaInput" name="fecha" type="hidden" />
               </div>
               <div>
@@ -373,13 +380,31 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    flatpickr("#fecha", {
+    const resumenDiaSemana = document.getElementById('resumenDiaSemana');
+    const resumenDiaNumero = document.getElementById('resumenDiaNumero');
+    const resumenMes = document.getElementById('resumenMes');
+
+    function actualizarResumen(date) {
+      if (!date) return;
+      const diaSemana = date.toLocaleDateString('es-ES', { weekday: 'long' });
+      const mes = date.toLocaleDateString('es-ES', { month: 'long' });
+      resumenDiaSemana.textContent = diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1);
+      resumenDiaNumero.textContent = date.getDate();
+      resumenMes.textContent = mes.charAt(0).toUpperCase() + mes.slice(1);
+    }
+
+    const picker = flatpickr("#fecha", {
       inline: true,
+      defaultDate: "today",
       dateFormat: "Y-m-d",
       onChange: function(selectedDates, dateStr) {
         document.getElementById('fechaInput').value = dateStr;
+        actualizarResumen(selectedDates[0]);
       }
     });
+
+    actualizarResumen(picker.selectedDates[0]);
+    document.getElementById('fechaInput').value = picker.formatDate(picker.selectedDates[0], "Y-m-d");
   </script>
   <script>
     // Año dinámico
