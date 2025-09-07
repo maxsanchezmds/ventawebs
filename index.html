@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sitios y aplicaciones web a la medida</title>
+  <meta name="description" content="Desarrollo de sitios y aplicaciones web a la medida: diseño, desarrollo y despliegue con opciones de pago flexibles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0a0a0a;
+      --card: #121212;
+      --muted: #bdbdbd;
+      --text: #ffffff;
+      --primary: #8B5CF6; /* violeta */
+      --primary-700: #6D28D9;
+      --ring: rgba(139, 92, 246, 0.35);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height:1.6;
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+
+    .container{width:100%; max-width:1200px; margin-inline:auto; padding-inline:24px}
+    .section{padding: clamp(56px, 8vw, 96px) 0}
+
+    /* Botones */
+    .btn{
+      display:inline-block; padding:14px 22px; border-radius: 14px; font-weight:600;
+      background: var(--primary); color:#fff; border:1px solid transparent;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 16px 40px rgba(0,0,0,.45); background: var(--primary-700)}
+    .btn:focus{outline: none; box-shadow: 0 0 0 6px var(--ring)}
+
+    /* HERO */
+    .hero{
+      position:relative; min-height: 88vh; display:grid; place-items:center; text-align:center;
+      background: url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2400&auto=format&fit=crop') center/cover no-repeat;
+    }
+    .hero::before{content:""; position:absolute; inset:0; background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.35));}
+    .hero-inner{position:relative; z-index:1; padding: 0 24px}
+    .hero h1{font-size: clamp(28px, 5.5vw, 64px); line-height:1.1; font-weight:800; letter-spacing:-.02em}
+    .hero p{max-width:850px; margin:16px auto 28px; color: var(--muted); font-size: clamp(14px, 2.2vw, 18px)}
+
+    /* Split sections (imagen con degradado a la derecha) */
+    .split{
+      position:relative; min-height:70vh; display:flex; align-items:center; background:#111;
+      background-position:center; background-size:cover;
+    }
+    .split::before{ /* degradado oscuro hacia la derecha */
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.45) 40%, rgba(0,0,0,.85) 78%);
+    }
+    .split .content{position:relative; z-index:1; margin-left:auto; width: min(680px, 92%); padding: clamp(28px, 5vw, 48px)}
+    .split h2{font-size: clamp(24px, 4.2vw, 44px); line-height:1.15; margin:0 0 12px; font-weight:800}
+    .split p{color:#e6e6e6; font-size: clamp(14px, 2.2vw, 18px); margin:0}
+    .split .actions{margin-top:18px}
+
+    /* Sección precios */
+    .prices h2{font-size: clamp(24px, 4vw, 40px); margin:0}
+    .subtitle{color: var(--muted); margin-top:10px; font-size: clamp(14px, 2.2vw, 18px)}
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding:24px;
+      box-shadow: var(--shadow);
+    }
+    .grid{display:grid; gap:22px}
+    @media (min-width: 860px){ .grid-cols-2{grid-template-columns: 1fr 1fr} }
+
+    .list{margin:0; padding-left:0; list-style:none}
+    .list li{display:flex; gap:10px; align-items:flex-start; padding:8px 0}
+    .badge{display:inline-block; padding:4px 10px; border-radius:999px; background:#1d1d1d; color:#f2f2f2; font-size:12px; border:1px solid rgba(255,255,255,.08)}
+
+    /* Contacto */
+    .contact h2{font-size: clamp(24px, 4vw, 40px); margin:0}
+    .contact .cards{display:grid; gap:18px}
+    @media (min-width: 900px){ .contact .cards{grid-template-columns: repeat(3, 1fr)} }
+
+    .contact .small{color: var(--muted); font-size:13px}
+    .contact a.underline{ text-decoration: underline; text-underline-offset: 3px }
+
+    footer{border-top:1px solid rgba(255,255,255,.08); color:#a3a3a3}
+
+    /* Aparición suave */
+    .reveal{opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease}
+    .reveal.in{opacity:1; transform: translateY(0)}
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .reveal{opacity:1; transform:none}
+      .btn{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <header class="hero" role="banner" aria-label="Portada">
+    <div class="hero-inner">
+      <h1>Satios y aplicaciones web a la medida</h1>
+      <p>Diseñamos, desarrollamos y desplegamos soluciones digitales hechas a tu medida para acelerar tu negocio.</p>
+      <a href="#contacto" class="btn" aria-label="Ir a contacto">Hablemos de tu proyecto</a>
+    </div>
+  </header>
+
+  <!-- ¿Tienes una gran idea? -->
+  <section class="split section reveal" style="background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2400&auto=format&fit=crop')">
+    <div class="content container">
+      <h2>¿Tienes una gran idea?</h2>
+      <p>
+        Sea cual sea tu visión, podemos construirla. Hemos participado en proyectos exigentes para múltiples sectores, resolviendo retos complejos y llevando conceptos a productos reales. Tu idea, bien ejecutada, puede ser la próxima.
+      </p>
+    </div>
+  </section>
+
+  <!-- ¿Falta capital? + CTA Crear propuesta -->
+  <section class="split section reveal" style="background-image:url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=2400&auto=format&fit=crop')">
+    <div class="content container">
+      <h2>¿Tu idea es increíble pero te falta capital?</h2>
+      <p>
+        Estamos abiertos a co‑desarrollar y desplegar tu proyecto ajustando el costo a lo que tu bolsillo o PyME pueda manejar. Podemos financiar una parte del desarrollo a cambio de un porcentaje de las ganancias futuras o dividir el pago en cuotas cómodas y previsibles.
+      </p>
+      <div class="actions">
+        <a href="#contacto" class="btn" id="crear-propuesta">Crear propuesta</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COSTO Y MEDIOS DE PAGO -->
+  <section class="section prices reveal" id="precios">
+    <div class="container">
+      <h2>Costo y Medios de Pago</h2>
+      <p class="subtitle">El valor depende de la complejidad del proyecto. Podrás pedir la cotización de tu idea <strong>SIN COSTO</strong>.</p>
+
+      <div class="grid grid-cols-2" style="margin-top:28px">
+        <div class="card">
+          <span class="badge">Formas de pago</span>
+          <ul class="list" style="margin-top:12px">
+            <li>Hasta <strong>24 cuotas</strong> para proyectos grandes.</li>
+            <li>Hasta <strong>12 cuotas</strong> para proyectos pequeños.</li>
+            <li>Al contado aceptamos <strong>transferencias</strong>, <strong>tarjetas de débito</strong> y <strong>tarjetas de crédito</strong>.</li>
+          </ul>
+          <p class="small" style="color:#9b9b9b; margin-top:10px">* Sujeto a evaluación del proyecto y del plan elegido.</p>
+        </div>
+        <div class="card" aria-label="Solicitud de cotización">
+          <h3 style="margin:0 0 8px; font-size:20px; font-weight:700">Solicita tu cotización</h3>
+          <p class="small" style="margin:0 0 12px">Cuéntanos brevemente tu idea y te responderemos con un estimado inicial.</p>
+          <form id="cotizar-form" style="display:grid; gap:10px">
+            <input type="text" name="nombre" placeholder="Tu nombre" required aria-label="Nombre" style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:#fff" />
+            <input type="email" name="email" placeholder="Tu correo" required aria-label="Correo" style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:#fff" />
+            <textarea name="detalle" rows="4" placeholder="Describe tu proyecto" required aria-label="Detalle del proyecto" style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f0f0f; color:#fff"></textarea>
+            <button class="btn" type="submit">Enviar</button>
+            <p id="form-status" class="small" role="status" aria-live="polite" style="display:none; color:#bdbdbd"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section contact reveal" id="contacto" aria-label="Contacto">
+    <div class="container">
+      <h2>¿Qué esperas para dar marcha a tu idea?</h2>
+      <p class="subtitle">Estamos aquí para ayudarte si tienes una gran idea.</p>
+
+      <div class="cards" style="margin-top:22px">
+        <div class="card">
+          <h3 style="margin:0 0 8px">WhatsApp</h3>
+          <p class="small">Escríbenos y conversemos tu proyecto.</p>
+          <a class="btn" href="https://wa.me/56912345678" target="_blank" rel="noopener">Enviar mensaje</a>
+          <p class="small" style="margin-top:10px">Tiempo de respuesta aprox. 1–3 horas hábiles.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px">Correo</h3>
+          <p class="small">Prefieres email:</p>
+          <p><a class="underline" href="mailto:contacto@tuagencia.cl">contacto@tuagencia.cl</a></p>
+          <a class="btn" href="mailto:contacto@tuagencia.cl?subject=Cotización%20de%20proyecto">Solicitar cotización</a>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px">Teléfono</h3>
+          <p class="small">¿Quieres hablar ahora?</p>
+          <p style="font-weight:700; font-size:18px">+56 9 1234 5678</p>
+          <p class="small">Lun–Vie, 9:00 a 18:00 (CLT)</p>
+        </div>
+      </div>
+
+      <p class="small" style="margin-top:14px">* Reemplaza los datos de contacto por los tuyos antes de publicar.</p>
+    </div>
+  </section>
+
+  <footer class="section" style="padding:28px 0">
+    <div class="container" style="display:flex; gap:18px; flex-wrap:wrap; align-items:center; justify-content:space-between">
+      <p class="small">© <span id="year"></span> Tu Agencia. Todos los derechos reservados.</p>
+      <nav style="display:flex; gap:18px">
+        <a class="small underline" href="#precios">Precios</a>
+        <a class="small underline" href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico en el footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Aparición suave al hacer scroll
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold: .12});
+    els.forEach(el=>io.observe(el));
+
+    // Formulario de cotización (demo sin backend)
+    const form = document.getElementById('cotizar-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', (ev)=>{
+      ev.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Aquí iría tu fetch hacia tu endpoint real
+      console.log('Solicitud de cotización:', data);
+      status.style.display = 'block';
+      status.textContent = '¡Gracias! Recibimos tu solicitud y te contactaremos pronto.';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
