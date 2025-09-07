@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -317,7 +318,7 @@
             <form class="mt-6 space-y-4" action="#" method="POST">
               <div>
                 <label class="mb-1 block text-sm font-medium" for="fecha">Fecha</label>
-                <input id="fecha" name="fecha" type="date" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
+                <input id="fecha" name="fecha" type="text" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
               </div>
               <div>
                 <label class="mb-1 block text-sm font-medium" for="hora">Hora</label>
@@ -369,6 +370,10 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#fecha", { inline: true, dateFormat: "Y-m-d" });
+  </script>
   <script>
     // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
