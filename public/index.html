@@ -402,7 +402,7 @@
           <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
             <h3 class="text-3xl font-bold tracking-tight sm:text-4xl">Contáctanos</h3>
             <div class="mt-6 space-y-4">
-              <a href="https://wa.me/56973279074" target="_blank" class="flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700">
+              <a href="https://wa.me/56973279074" target="_blank" onclick="gtag_report_conversion();" class="flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700">
                 <img src="./images/WhatsappIcon.png" alt="WhatsApp" class="h-5 w-5" />
                 Enviar WhatsApp
               </a>
@@ -550,6 +550,7 @@
 
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      gtag_report_conversion();
       const form = e.target;
       const payload = {
         fecha: form.fecha.value,
