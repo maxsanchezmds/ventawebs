@@ -431,6 +431,7 @@
       onChange: function(selectedDates, dateStr) {
         document.getElementById('fechaInput').value = dateStr;
         actualizarResumen(selectedDates[0]);
+        resetButton();
       }
     });
 
@@ -506,6 +507,16 @@
     const btnText = document.getElementById('btnText');
     const btnSpinner = document.getElementById('btnSpinner');
 
+    function resetButton() {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('bg-green-600', 'bg-red-600', 'hover:bg-green-700', 'hover:bg-red-700', 'cursor-not-allowed');
+      submitBtn.classList.add('bg-brand-600', 'hover:bg-brand-700');
+      btnText.textContent = 'Confirmar';
+    }
+
+    contactForm.addEventListener('input', resetButton);
+    contactForm.addEventListener('change', resetButton);
+
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -526,12 +537,19 @@
         const result = await resp.json();
         if (result.ok) {
           btnText.textContent = 'Agenda realizada con éxito';
+          submitBtn.classList.remove('bg-brand-600', 'hover:bg-brand-700', 'bg-red-600', 'hover:bg-red-700');
+          submitBtn.classList.add('bg-green-600', 'cursor-not-allowed');
+          submitBtn.disabled = true;
           form.reset();
         } else {
-          btnText.textContent = 'No se pudo crear la agenda';
+          btnText.textContent = 'Agenda fallida';
+          submitBtn.classList.remove('bg-brand-600', 'hover:bg-brand-700', 'bg-green-600', 'hover:bg-green-700');
+          submitBtn.classList.add('bg-red-600', 'hover:bg-red-700');
         }
       } catch (err) {
-        btnText.textContent = 'Error al enviar la solicitud';
+        btnText.textContent = 'Agenda fallida';
+        submitBtn.classList.remove('bg-brand-600', 'hover:bg-brand-700', 'bg-green-600', 'hover:bg-green-700');
+        submitBtn.classList.add('bg-red-600', 'hover:bg-red-700');
       } finally {
         btnSpinner.classList.add('hidden');
         btnText.classList.remove('hidden');
