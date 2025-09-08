@@ -28,7 +28,9 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ ok: false, message: 'Fecha y hora requeridas' });
     }
 
-    const selectedDate = new Date(`${fecha}T${hora}`);
+    const [Y, M, D] = fecha.split('-').map(Number);
+    const [h, m]    = hora.split(':').map(Number);
+    const selectedDate = new Date(Y, M - 1, D, h, m, 0, 0);
 
     if (isNaN(selectedDate.getTime())) {
       return res.status(400).json({ ok: false, message: 'Fecha u hora inválida' });
