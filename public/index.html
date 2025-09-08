@@ -337,7 +337,34 @@
                 <label class="mb-1 block text-sm font-medium" for="telefono">Número de teléfono</label>
                 <input id="telefono" name="telefono" type="tel" value="+56 " inputmode="numeric" class="w-full rounded-lg border border-slate-300 bg-slate-100 px-3 py-2 focus:border-brand-500 focus:outline-none" />
               </div>
-              <button type="submit" class="w-full rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700">Confirmar</button>
+              <button
+                type="submit"
+                id="submitBtn"
+                class="w-full rounded-lg bg-brand-600 px-4 py-2 text-white hover:bg-brand-700 flex items-center justify-center gap-2"
+              >
+                <svg
+                  id="btnSpinner"
+                  class="hidden h-5 w-5 animate-spin"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                <span id="btnText">Confirmar</span>
+              </button>
             </form>
           </div>
         </div>
@@ -474,7 +501,12 @@
   </script>
 
   <script>
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
       const payload = {
@@ -483,6 +515,8 @@
         telefono: form.telefono.value
       };
 
+      btnText.classList.add('hidden');
+      btnSpinner.classList.remove('hidden');
       try {
         const resp = await fetch(form.action, {
           method: 'POST',
@@ -491,13 +525,16 @@
         });
         const result = await resp.json();
         if (result.ok) {
-          alert('Agenda creada correctamente');
+          btnText.textContent = 'Agenda realizada con éxito';
           form.reset();
         } else {
-          alert('No se pudo crear la agenda');
+          btnText.textContent = 'No se pudo crear la agenda';
         }
       } catch (err) {
-        alert('Error al enviar la solicitud');
+        btnText.textContent = 'Error al enviar la solicitud';
+      } finally {
+        btnSpinner.classList.add('hidden');
+        btnText.classList.remove('hidden');
       }
     });
   </script>
