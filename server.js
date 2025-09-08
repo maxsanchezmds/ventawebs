@@ -2,6 +2,13 @@
 const express = require('express');
 const path = require('path');
 
+// Forzar redirección a HTTPS en toda la aplicación
+app.enable('trust proxy');
+app.use((req, res, next) => {
+  if (req.secure) return next();
+  res.redirect(`https://${req.headers.host}${req.url}`);
+});
+
 const app = express();
 
 // 1) Servir archivos estáticos de /public (HTML, CSS, JS, imágenes)
