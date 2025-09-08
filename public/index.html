@@ -428,6 +428,7 @@
       inline: true,
       defaultDate: "today",
       dateFormat: "Y-m-d",
+      minDate: "today",
       onChange: function(selectedDates, dateStr) {
         document.getElementById('fechaInput').value = dateStr;
         actualizarResumen(selectedDates[0]);
@@ -525,6 +526,12 @@
         hora: form.hora.value,
         telefono: form.telefono.value
       };
+
+      const selectedDateTime = new Date(`${payload.fecha}T${payload.hora}`);
+      if (isNaN(selectedDateTime.getTime()) || selectedDateTime < new Date()) {
+        alert('La fecha y hora seleccionadas ya han pasado. Elige una fecha futura.');
+        return;
+      }
 
       btnText.classList.add('hidden');
       btnSpinner.classList.remove('hidden');

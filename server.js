@@ -23,6 +23,20 @@ app.post('/api/contact', async (req, res) => {
   console.log('Nuevo contacto:', { fecha, hora, telefono });
 
   try {
+    // Validación básica de fecha y hora para evitar agendas en el pasado
+    if (!fecha || !hora) {
+      return res.status(400).json({ ok: false, message: 'Fecha y hora requeridas' });
+    }
+
+    const selectedDate = new Date(`${fecha}T${hora}`);
+
+    if (isNaN(selectedDate.getTime())) {
+      return res.status(400).json({ ok: false, message: 'Fecha u hora inválida' });
+    }
+
+    if (selectedDate < new Date()) {
+      return res.status(400).json({ ok: false, message: 'La fecha/hora debe ser en el futuro' });
+    }
     const gsResponse = await fetch(
       'https://script.google.com/macros/s/AKfycbxgvPNHUDNzZx0kp8jgq1LdlxJaxIXvA_M-RZu1rsS9Cagor8nsCGPAAg3PHnJQBqo4Lw/exec',
       {
