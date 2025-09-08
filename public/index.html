@@ -331,7 +331,7 @@
               </div>
               <div>
                 <label class="mb-1 block text-sm font-medium" for="hora">Hora</label>
-                <input id="hora" name="hora" type="time" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
+                <input id="hora" name="hora" type="text" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
               </div>
               <div>
                 <label class="mb-1 block text-sm font-medium" for="telefono">Número de teléfono</label>
@@ -409,6 +409,14 @@
 
     actualizarResumen(picker.selectedDates[0]);
     document.getElementById('fechaInput').value = picker.formatDate(picker.selectedDates[0], "Y-m-d");
+
+    flatpickr("#hora", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true
+    });
+    
   </script>
   <script>
     // Año dinámico
