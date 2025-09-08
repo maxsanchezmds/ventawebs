@@ -510,7 +510,7 @@
 
     function resetButton() {
       submitBtn.disabled = false;
-      submitBtn.classList.remove('bg-green-600', 'bg-red-600', 'hover:bg-green-700', 'hover:bg-red-700', 'cursor-not-allowed');
+      submitBtn.classList.remove('bg-green-600', 'bg-red-600', 'bg-slate-400', 'hover:bg-green-700', 'hover:bg-red-700', 'cursor-not-allowed');
       submitBtn.classList.add('bg-brand-600', 'hover:bg-brand-700');
       btnText.textContent = 'Confirmar';
     }
@@ -529,7 +529,10 @@
 
       const selectedDateTime = new Date(`${payload.fecha}T${payload.hora}`);
       if (isNaN(selectedDateTime.getTime()) || selectedDateTime < new Date()) {
-        alert('La fecha y hora seleccionadas ya han pasado. Elige una fecha futura.');
+        btnText.textContent = 'Tiempo en el pasado, favor actualizar.';
+        submitBtn.classList.remove('bg-brand-600', 'hover:bg-brand-700');
+        submitBtn.classList.add('bg-slate-400', 'cursor-not-allowed');
+        submitBtn.disabled = true;
         return;
       }
 
