@@ -316,7 +316,7 @@
         <div class="reveal">
           <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
             <h3 class="text-3xl font-bold tracking-tight sm:text-4xl">Quiero que me contacten</h3>
-            <form class="mt-6 space-y-4" action="#" method="POST">
+            <form id="contactForm" class="mt-6 space-y-4" action="/api/contact" method="POST">
               <div>
                 <label class="mb-1 block text-sm font-medium">Fecha</label>
                 <div class="flex flex-col sm:flex-row items-center gap-4">
@@ -450,6 +450,35 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const payload = {
+        fecha: form.fecha.value,
+        hora: form.hora.value,
+        telefono: form.telefono.value
+      };
+
+      try {
+        const resp = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await resp.json();
+        if (result.ok) {
+          alert('Agenda creada correctamente');
+          form.reset();
+        } else {
+          alert('No se pudo crear la agenda');
+        }
+      } catch (err) {
+        alert('Error al enviar la solicitud');
+      }
+    });
   </script>
 
   <!-- JSON‑LD básico -->
