@@ -24,7 +24,7 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     const gsResponse = await fetch(
-      'https://script.google.com/macros/s/AKfycbzwbL7L4Hckxry0HhT9x_H3yOM0uR0th4Qv6UikKTXCZozfs1Dsy93CHwiUBN9CeNyieA/exec',
+      'https://script.google.com/macros/s/AKfycbxgvPNHUDNzZx0kp8jgq1LdlxJaxIXvA_M-RZu1rsS9Cagor8nsCGPAAg3PHnJQBqo4Lw/exec',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
