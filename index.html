@@ -334,7 +334,7 @@
               </div>
               <div>
                 <label class="mb-1 block text-sm font-medium" for="telefono">Número de teléfono</label>
-                <input id="telefono" name="telefono" type="tel" value="+56 9" class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-500 focus:outline-none" />
+                <input id="telefono" name="telefono" type="tel" value="+56 " inputmode="numeric" class="w-full rounded-lg border border-slate-300 bg-slate-100 px-3 py-2 focus:border-brand-500 focus:outline-none" />
               </div>
             </form>
           </div>
@@ -415,6 +415,15 @@
     const menu = document.getElementById('mobileMenu');
     btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
 
+    // Prefijo fijo y validación de teléfono
+    const telInput = document.getElementById('telefono');
+    telInput.addEventListener('input', () => {
+      if (!telInput.value.startsWith('+56 ')) {
+        telInput.value = '+56 ';
+      }
+      telInput.value = '+56 ' + telInput.value.slice(4).replace(/\D/g, '').slice(0, 9);
+    });
+    
     // Scroll suave para anclas internas
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
