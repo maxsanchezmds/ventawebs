@@ -16,6 +16,12 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Exponer de forma explícita el sitemap para los bots de búsqueda
+app.get('/sitemap.xml', (_req, res) => {
+  res.type('application/xml').sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+});
+
+
 // 4) Endpoint para recibir solicitudes de contacto y crear un evento
 // en Google Calendar mediante un Apps Script publicado como web app.
 app.post('/api/contact', async (req, res) => {
