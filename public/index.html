@@ -73,6 +73,37 @@
   </style>
 </head>
 <body class="bg-white text-slate-800 antialiased">
+
+  <!-- Modal país -->
+  <div id="countryModal" class="fixed inset-0 flex items-center justify-center bg-black/50">
+    <div class="w-11/12 max-w-sm rounded-lg bg-white p-6 text-center shadow-soft">
+      <h2 class="mb-4 text-xl font-semibold">¿De qué país nos visitas?</h2>
+      <select id="countrySelect" class="mb-4 w-full rounded border px-3 py-2">
+        <option value="">Selecciona un país</option>
+        <option>Argentina</option>
+        <option>Bolivia</option>
+        <option>Chile</option>
+        <option>Colombia</option>
+        <option>Costa Rica</option>
+        <option>Cuba</option>
+        <option>República Dominicana</option>
+        <option>Ecuador</option>
+        <option>El Salvador</option>
+        <option>Guatemala</option>
+        <option>Honduras</option>
+        <option>México</option>
+        <option>Nicaragua</option>
+        <option>Panamá</option>
+        <option>Paraguay</option>
+        <option>Perú</option>
+        <option>España</option>
+        <option>Uruguay</option>
+        <option>Venezuela</option>
+        <option>Guinea Ecuatorial</option>
+      </select>
+      <button id="countryContinue" class="w-full rounded bg-brand-600 px-4 py-2 text-white hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-slate-400" disabled>Continuar</button>
+    </div>
+  </div>
   <!-- Ornamentos de fondo -->
   <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-brand-100 blur-3xl"></div>
@@ -595,6 +626,20 @@
         btnSpinner.classList.add('hidden');
         btnText.classList.remove('hidden');
       }
+    });
+  </script>
+
+  <script>
+    const countryModal = document.getElementById('countryModal');
+    const countrySelect = document.getElementById('countrySelect');
+    const countryContinue = document.getElementById('countryContinue');
+
+    countrySelect.addEventListener('change', () => {
+      countryContinue.disabled = !countrySelect.value;
+    });
+
+    countryContinue.addEventListener('click', () => {
+      countryModal.classList.add('hidden');
     });
   </script>
 
