@@ -78,29 +78,12 @@
   <div id="countryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
     <div class="w-11/12 max-w-sm rounded-lg bg-white p-6 text-center shadow-soft">
       <h2 class="mb-4 text-xl font-semibold">¿De qué país nos visitas?</h2>
-      <select id="countrySelect" class="mb-4 w-full rounded border px-3 py-2">
-        <option value="">Selecciona un país</option>
-        <option>Argentina</option>
-        <option>Bolivia</option>
-        <option>Chile</option>
-        <option>Colombia</option>
-        <option>Costa Rica</option>
-        <option>Cuba</option>
-        <option>República Dominicana</option>
-        <option>Ecuador</option>
-        <option>El Salvador</option>
-        <option>Guatemala</option>
-        <option>Honduras</option>
-        <option>México</option>
-        <option>Nicaragua</option>
-        <option>Panamá</option>
-        <option>Paraguay</option>
-        <option>Perú</option>
-        <option>España</option>
-        <option>Uruguay</option>
-        <option>Venezuela</option>
-        <option>Guinea Ecuatorial</option>
-      </select>
+      <div class="relative mb-4">
+        <input id="countryInput" type="text" placeholder="Escribe tu país" autocomplete="off"
+          class="w-full rounded border px-3 py-2" />
+        <ul id="countrySuggestions"
+          class="absolute z-10 mt-1 hidden w-full rounded border bg-white text-left shadow-soft"></ul>
+      </div>
       <button id="countryContinue" class="w-full rounded bg-brand-600 px-4 py-2 text-white hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-slate-400" disabled>Continuar</button>
     </div>
   </div>
@@ -631,11 +614,68 @@
 
   <script>
     const countryModal = document.getElementById('countryModal');
-    const countrySelect = document.getElementById('countrySelect');
+    const countryInput = document.getElementById('countryInput');
+    const countrySuggestions = document.getElementById('countrySuggestions');
     const countryContinue = document.getElementById('countryContinue');
 
-    countrySelect.addEventListener('change', () => {
-      countryContinue.disabled = !countrySelect.value;
+    const countries = [
+      'Argentina',
+      'Bolivia',
+      'Chile',
+      'Colombia',
+      'Costa Rica',
+      'Cuba',
+      'República Dominicana',
+      'Ecuador',
+      'El Salvador',
+      'Guatemala',
+      'Honduras',
+      'México',
+      'Nicaragua',
+      'Panamá',
+      'Paraguay',
+      'Perú',
+      'España',
+      'Uruguay',
+      'Venezuela',
+      'Guinea Ecuatorial'
+    ];
+
+    const normalize = (str) =>
+      str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+    countryInput.addEventListener('input', () => {
+      const value = normalize(countryInput.value);
+      countrySuggestions.innerHTML = '';
+
+      if (!value) {
+        countrySuggestions.classList.add('hidden');
+        countryContinue.disabled = true;
+        return;
+      }
+
+      const matches = countries.filter((c) => normalize(c).includes(value));
+
+      if (matches.length) {
+        countrySuggestions.classList.remove('hidden');
+        matches.forEach((country) => {
+          const li = document.createElement('li');
+          li.textContent = country;
+          li.className = 'cursor-pointer px-3 py-2 hover:bg-slate-100';
+          li.addEventListener('mousedown', () => {
+            countryInput.value = country;
+            countrySuggestions.classList.add('hidden');
+            countryContinue.disabled = false;
+          });
+          countrySuggestions.appendChild(li);
+        });
+      } else {
+        countrySuggestions.classList.add('hidden');
+      }
+
+      countryContinue.disabled = !countries.some(
+        (c) => normalize(c) === value
+      );
     });
 
     countryContinue.addEventListener('click', () => {
