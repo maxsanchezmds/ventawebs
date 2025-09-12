@@ -496,12 +496,17 @@
 
     // Prefijo fijo y validación de teléfono
     const telInput = document.getElementById('telefono');
-    telInput.addEventListener('input', () => {
-      if (!telInput.value.startsWith('+56 ')) {
-        telInput.value = '+56 ';
+    let phonePrefix = '+56';
+    const formatPhone = () => {
+      const prefixWithSpace = phonePrefix + ' ';
+      if (!telInput.value.startsWith(prefixWithSpace)) {
+        telInput.value = prefixWithSpace;
       }
-      telInput.value = '+56 ' + telInput.value.slice(4).replace(/\D/g, '').slice(0, 9);
-    });
+      telInput.value =
+        prefixWithSpace + telInput.value.slice(prefixWithSpace.length).replace(/\D/g, '').slice(0, 9);
+    };
+    telInput.addEventListener('input', formatPhone);
+    formatPhone();
 
     // Formato de hora HH:MM a partir de 4 dígitos
     const horaInput = document.getElementById('hora');
@@ -667,6 +672,28 @@
       'guinea ecuatorial': { currency: 'USD', starter: '$250', pro: '$690', plus: 'Desde $1.290' }
     };
 
+    const phonePrefixes = {
+      chile: '+56',
+      argentina: '+54',
+      bolivia: '+591',
+      colombia: '+57',
+      'costa rica': '+506',
+      cuba: '+53',
+      'republica dominicana': '+1',
+      ecuador: '+593',
+      'el salvador': '+503',
+      guatemala: '+502',
+      honduras: '+504',
+      mexico: '+52',
+      nicaragua: '+505',
+      panama: '+507',
+      paraguay: '+595',
+      peru: '+51',
+      espana: '+34',
+      uruguay: '+598',
+      venezuela: '+58',
+      'guinea ecuatorial': '+240'
+    };
     const applyPricing = (country) => {
       const key = normalize(country);
       const p = pricing[key] || pricing['chile'];
@@ -714,6 +741,10 @@
 
     countryContinue.addEventListener('click', () => {
       applyPricing(countryInput.value);
+      const key = normalize(countryInput.value);
+      phonePrefix = phonePrefixes[key] || '+56';
+      telInput.value = phonePrefix + ' ';
+      formatPhone();
       countryModal.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     });
