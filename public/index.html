@@ -598,6 +598,8 @@
     const track    = document.querySelector('.track');
 
     let width = carousel.clientWidth;
+    // Track last known width to avoid unnecessary resets on mobile browser chrome show/hide
+    let lastWidth = width;
     let baseSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--burbuja-base'));
     let gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap'));
     let speed = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--velocidad'));
@@ -678,7 +680,7 @@
     }
 
     function tick(now){
-      const dt = Math.min(0.05, (now - lastTime)/1000);
+      const dt = (now - lastTime)/1000;
       lastTime = now;
 
       for (const item of bubbles){
@@ -691,10 +693,15 @@
     }
 
     const onResize = ()=>{
+      const newWidth = carousel.clientWidth;
+      if (newWidth === lastWidth) return;
+      width = lastWidth = newWidth;
       repositionOnResize();
       for (const b of bubbles) updateItemAppearance(b);
     };
-    window.addEventListener('resize', onResize);
+    const resizeObserver = new ResizeObserver(onResize);
+    resizeObserver.observe(carousel);
+    window.addEventListener('resize', onResize, { passive: true });
 
     createBubbles();
     for (const b of bubbles) updateItemAppearance(b);
