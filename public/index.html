@@ -503,7 +503,7 @@
         telInput.value = prefixWithSpace;
       }
       telInput.value =
-        prefixWithSpace + telInput.value.slice(prefixWithSpace.length).replace(/\D/g, '').slice(0, 9);
+        prefixWithSpace + telInput.value.slice(prefixWithSpace.length).replace(/\D/g, '').slice(0, 11);
     };
     telInput.addEventListener('input', formatPhone);
     formatPhone();
