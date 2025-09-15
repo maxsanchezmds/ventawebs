@@ -578,7 +578,7 @@
      * - Sin textos, sin botones, sin pausa/drag: animación infinita
      */
 
-    const IMAGES = [
+    let IMAGES = [
       "./images/bubbles/ConsorcioBubble.avif",
       "./images/bubbles/MaferBubble.avif",
       "./images/bubbles/QuintanaRooBubble.avif",
@@ -607,17 +607,44 @@
     let opMax = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--opacidad-max'));
 
     let bubbles = [];
+    let nextImageId = 0;
     let lastTime = performance.now();
+
+    function getNextImageIndex(){
+      if (!IMAGES.length) return null;
+      const idx = nextImageId % IMAGES.length;
+      nextImageId++;
+      return idx;
+    }
+
+    function setBubbleImage(bubble, idx){
+      if (!IMAGES.length || idx === null || !bubble || !bubble.img) return;
+      const length = IMAGES.length;
+      const normalized = ((idx % length) + length) % length;
+      bubble.imgIndex = normalized;
+      bubble.img.src = IMAGES[normalized];
+      bubble.img.alt = `Imagen ${normalized + 1}`;
+    }
+
+    function assignNextImage(bubble){
+      const idx = getNextImageIndex();
+      if (idx === null) return;
+      setBubbleImage(bubble, idx);
+    }
+
 
     function createBubbles(){
       track.innerHTML = '';
       bubbles.length = 0;
 
+      width = carousel.clientWidth;
+
       const totalWidthPerItem = baseSize + gap;
       const count = Math.ceil(width / totalWidthPerItem) + 3;
 
       let x = width * 0.15;
-      let imgIndex = 0;
+
+      nextImageId = 0;
 
       for (let i = 0; i < count; i++){
         const el = document.createElement('div');
@@ -627,15 +654,19 @@
         img.alt = `Imagen ${i+1}`;
         img.decoding = 'async';
         img.loading  = 'lazy';
-        img.src = IMAGES[imgIndex % IMAGES.length];
-        imgIndex++;
 
         el.appendChild(img);
         track.appendChild(el);
 
         const w = baseSize;
-        bubbles.push({ el, x, w, imgIndex });
+        const bubble = { el, img, x, w, imgIndex: -1 };
+        assignNextImage(bubble);
+        bubbles.push(bubble);
         x += w + gap;
+      }
+
+      if (IMAGES.length) {
+        nextImageId = bubbles.length;
       }
     }
 
@@ -654,14 +685,15 @@
     }
 
     function recycling(item){
-      if (item.x + item.w * scaleMin < 0){
+      const threshold = 0;
+      while (item.x + item.w * scaleMin < threshold){
         let maxX = -Infinity;
         for (const b of bubbles) maxX = Math.max(maxX, b.x);
-        item.x = maxX + item.w + gap;
-
-        item.imgIndex = (item.imgIndex + 1) % IMAGES.length;
-        const img = item.el.querySelector('img');
-        if (img) img.src = IMAGES[item.imgIndex];
+        if (!Number.isFinite(maxX)) break;
+        const step = item.w + gap;
+        if (step <= 0) break;
+        item.x = maxX + step;
+        assignNextImage(item);
       }
     }
 
@@ -708,10 +740,12 @@
     window.carouselSetSpeed  = (pxPerSec)=>{ speed = +pxPerSec; };
     window.carouselSetImages = (urls=[])=>{
       if (!urls.length) return;
+      IMAGES = urls.slice();
+      nextImageId = 0;
       for (let i=0;i<bubbles.length;i++){
-        bubbles[i].imgIndex = i % urls.length;
-        bubbles[i].el.querySelector('img').src = urls[bubbles[i].imgIndex];
+        assignNextImage(bubbles[i]);
       }
+      nextImageId = IMAGES.length ? bubbles.length : 0;
     };
 
   </script>
